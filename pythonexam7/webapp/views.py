@@ -10,12 +10,10 @@ from django.shortcuts import render, redirect
 class PollListView(ListView):
     model = Poll
     template_name = 'home.html'
-    context_object_name = 'polls'
     paginate_by = 5
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['polls']= Poll.objects.all().order_by('-created_at')
-        print(context)
         return context
 
 
@@ -46,6 +44,7 @@ class AddView(TemplateView):
 class AddChoiceView(TemplateView):
     template_name = 'add_choices.html'
     form = MyChoiceForm
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['myform'] = self.form()
@@ -123,3 +122,20 @@ class DeleteChoiceView(TemplateView):
             choice.delete()
             return redirect('home')
         return render(request, 'delete_choice.html', {'choice': choice})
+
+
+class PollView(TemplateView):
+    template_name = "poll.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        poll = Poll.objects.get(pk=context['pk'])
+        context['poll'] = poll
+        context['choices'] = poll.choices.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST.get('choice'))
+        # if form.is_valid():
+        #     new_choice = Choice.objects.create(text=form.cleaned_data['text'], poll=form.cleaned_data['poll'])
+        #     return redirect('home')
+        # return render(request, 'add_choices.html', {'myform': form})

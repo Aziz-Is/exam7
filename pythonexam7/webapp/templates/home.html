@@ -6,12 +6,12 @@
 </head>
 <body>
 
+
 {% for p in polls %}
 
 <a href="{% url 'detail' pk=p.id %}"><h3>{{p.question}}</h3></a>
 
 <span>{{p.created_at}}</span>
-<hr>
 
 {% endfor %}
 

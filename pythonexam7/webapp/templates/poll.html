@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3> {{poll.question}} </h3>
+<hr>
+
+<form method="post">
+    {%csrf_token%}
+  <p>Please select your preferred choice:</p>
+  <div>
+      {%for choice in choices %}
+
+    <input type="radio" name="{{choice.id}}" id="{{choice.id}}" value="{{choice.text}}">
+    <label>{{choice.text}}</label>
+
+      {%endfor%}
+    </div>
+
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+
+<br>
+
+
+
+
+
+</body>
+</html>
