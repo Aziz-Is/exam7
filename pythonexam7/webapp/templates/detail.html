@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <h4>{{poll.question}}</h4>
+
+{{poll.created_at}}
+
+<a href="{%url 'add-choices'%}">
+    Добавить новый вариант ответа
+</a>
+
+
+</div>
+
+<br> Choices: <br>
+{%for c in choices%}
+{{c.text}}
+<a href="{%url 'delete-choices' pk=c.id %}">
+    Удалить
+</a>
+<a href="{%url 'update-choices' pk=c.id %}">
+    Изменить
+</a>
+<hr>
+{%endfor%}
+
+</body>
+</html>
